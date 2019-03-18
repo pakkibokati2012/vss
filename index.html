@@ -280,13 +280,40 @@
         var timeIntervals = ['am', 'pm']
         var todaysIndex = weekDays.indexOf(todaysDate.weekDay);
         var data = [];
+        var realData = [];
         for(var i = todaysIndex; i >= 0; i-- ) {
+            realData.push((function(input){this.setDate(this.getDate()-input); return this})
+                  .call(new Date, i));
             data.push(inRequiredFormat((function(input){this.setDate(this.getDate()-input); return this})
                   .call(new Date, i)))
         }
         for(var j = 1; j <= 6-todaysIndex; j++) {
+            realData.push((function(input){this.setDate(this.getDate()+input); return this})
+                  .call(new Date, j));
             data.push(inRequiredFormat((function(input){this.setDate(this.getDate()+input); return this})
                   .call(new Date, j)));
+        }
+        console.log('real', realData);
+
+
+        function nextWeek(currentWeek) {
+            var nextWeek = [];
+            currentWeek.forEach((each) => {
+                nextWeek.push((function(input){this.setDate(this.getDate()+input); return this})
+                  .call(each, 7))
+            });
+            return nextWeek;
+        }
+
+
+
+        function previousWeek(currentWeek) {
+            var previousWeek = [];
+            currentWeek.forEach((each) => {
+                previousWeek.push((function(input){this.setDate(this.getDate()-input); return this})
+                  .call(each, 7))
+            });
+            return previousWeek;
         }
         data.shift();
         data.pop();
@@ -322,6 +349,13 @@
                     items: 1
                 }
             }
+        })
+        $('.owl-prev').click(function() {
+            console.log(previousWeek(realData));
+        })
+        $('.owl-next').click(function() {
+            console.log(nextWeek(realData));
+            
         })
         $(".action-block").click(function() {
             $(this).toggleClass("true");
