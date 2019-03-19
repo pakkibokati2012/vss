@@ -30,7 +30,7 @@
     <div class="schedule">
         <div class="owl-carousel owl-theme ">
             <div class="item">
-                <table id="myTable" width="100%" border="0" cellpadding="0" cellspacing="0">
+                <table id="myTable1" width="100%" border="0" cellpadding="0" cellspacing="0">
                     <thead>
                         <tr>
                             <th><strong class="vss">VSS</strong></th>
@@ -141,15 +141,11 @@
                 </table>
             </div>
             <div class="item">
-                <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                <table id="myTable2" width="100%" border="0" cellpadding="0" cellspacing="0">
                     <thead>
                         <tr>
                             <th><strong class="vss">VSS</strong></th>
-                            <th><strong class="day">MON</strong><span class="date">11</span><span class="month">MAR</span></th>
-                            <th><strong class="day">TUE</strong><span class="date">12</span><span class="month">MAR</span></th>
-                            <th><strong class="day">WED</strong><span class="date">13</span><span class="month">MAR</span></th>
-                            <th><strong class="day">THU</strong><span class="date">14</span><span class="month">MAR</span></th>
-                            <th><strong class="day">FRI</strong><span class="date">15</span><span class="month">MAR</span></th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -256,6 +252,7 @@
                     </tbody>
                 </table>
             </div>
+            
         </div>
         <button class="submit"><span>submit</span></button>
     </div>
@@ -320,7 +317,7 @@
 
         function contentInsertor () {
             data.forEach((each) => {    
-                $("#myTable thead tr").append('<th><strong class="day">'+ each.weekDay+'</strong><span class="date">'+each.day+'</span><span class="month">'+each.month+'</span></th>');
+                $("#myTable1 thead tr").append('<th><strong class="day">'+ each.weekDay+'</strong><span class="date">'+each.day+'</span><span class="month">'+each.month+'</span></th>');
             });
         }
 
@@ -351,11 +348,14 @@
             }
         })
         $('.owl-prev').click(function() {
-            console.log(previousWeek(realData));
+            previousWeek(realData).forEach((each) => {    
+            $("#myTable2 thead tr").append('<th><strong class="day">'+ each.toString().substring(0, 3).toUpperCase()+'</strong><span class="date">'+each.getDate()+'</span><span class="month">'+each.toString().substring(4, 7).toUpperCase()+'</span></th>');
+            });
         })
         $('.owl-next').click(function() {
-            console.log(nextWeek(realData));
-            
+            nextWeek(realData).forEach((each) => {    
+                $("#myTable2 thead tr").append('<th><strong class="day">'+ each.toString().substring(0, 3).toUpperCase()+'</strong><span class="date">'+each.getDate()+'</span><span class="month">'+each.toString().substring(4, 7).toUpperCase()+'</span></th>');
+            });
         })
         $(".action-block").click(function() {
             $(this).toggleClass("true");
